@@ -9,11 +9,24 @@ async function createUser(req: Request, res: Response){
         badRequest("envie email e senha para continuar")
     }
 
-    await authService.createUser({ email, password });
+    await authService.insertUser(req.body);
 
     res.sendStatus(201);
 }
 
+async function signIn(req: Request, res: Response){
+    const { email, password } = req.body;
+
+    if(!email || !password){
+        badRequest("envie email e senha para continuar")
+    }
+
+    const userKey = await authService.signIn(req.body);
+
+    res.status(200).send({ userKey });
+}
+
 export {
     createUser,
+    signIn,
 }

@@ -22,7 +22,6 @@ model User {
 model Sessions {
   id         Int    @id @default(autoincrement())
   userId     Int    @unique
-  token      String @unique
   User       User?  @relation(fields: [userId], references: [id])
 }
 

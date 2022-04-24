@@ -5,27 +5,42 @@ export interface User {
     email: string;
     password: string;
 }
-
 export type createUser = Omit<User, "id">;
 
-async function findByEmail(email: string) {
+export interface Session {
+    id: number;
+    userId: number;
+}
+export type createSession = Omit<Session, "id">;
+
+
+async function findUserByEmail(email: string) {
     return prisma.user.findUnique({
         where: { email }
     });
 }
 
-async function createUser(userData: createUser) {
+async function insertUser(userData: createUser) {
     return prisma.user.create({
         data: userData
     });
 }
 
-async function findUsers() {
-    return prisma.user.findMany();
+async function insertSession(sessionData: createSession) {
+    return prisma.sessions.create({
+        data: sessionData
+    })
+}
+
+async function findSession(sessionData: createSession) {
+    return prisma.sessions.findUnique({
+        where: { userId: sessionData.userId }
+    })
 }
 
 export {
-    findUsers,
-    findByEmail,
-    createUser,
+    findUserByEmail,
+    insertUser,
+    insertSession,
+    findSession,
 }
