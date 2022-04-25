@@ -5,8 +5,7 @@ import * as authController from '../controllers/authController.js';
 
 const authRouter = Router();
 
-authRouter.use(validateSchemaMiddleware(authSchema));
-authRouter.post('/sign_up', authController.createUser);
-authRouter.post('/sign_in', authController.signIn);
+authRouter.post('/sign_up', validateSchemaMiddleware(authSchema), authController.createUser);
+authRouter.post('/sign_in', validateSchemaMiddleware(authSchema), authController.signIn);
 
 export default authRouter;

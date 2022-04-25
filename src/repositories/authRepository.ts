@@ -33,8 +33,15 @@ async function insertSession(sessionData: createSession) {
 }
 
 async function findSession(sessionData: createSession) {
-    return prisma.sessions.findUnique({
+    return prisma.sessions.findFirst({
         where: { userId: sessionData.userId }
+    })
+}
+
+async function findSessionById(userKey: any) {
+    const { sessionId } = userKey;
+    return prisma.sessions.findUnique({
+        where: { id: sessionId }
     })
 }
 
@@ -43,4 +50,5 @@ export {
     insertUser,
     insertSession,
     findSession,
+    findSessionById,
 }
